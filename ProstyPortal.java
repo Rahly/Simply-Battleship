@@ -1,13 +1,17 @@
 
 public class ProstyPortal {
 	
-	static int[] polaPolozenia;
-	static int iloscTrafien = 0;
+	int[] polaPolozenia;
+	int iloscTrafien = 0;
 	
-	public static String sprawdz(String stringPole)
+	public void setPolaPolzenia(int [] ppol)
+	{
+		polaPolozenia = ppol;
+	}
+	
+	public String sprawdz(String stringPole)
 	{
 		int strzal = Integer.parseInt(stringPole);
-		
 		String wynik = "pud³o";
 		
 		for(int pole:polaPolozenia) {
@@ -19,7 +23,6 @@ public class ProstyPortal {
 		}
 		
 		if(iloscTrafien == polaPolozenia.length) {
-			
 			wynik = "zatopiony";
 		}
 		
@@ -28,7 +31,8 @@ public class ProstyPortal {
 		return wynik;
 	}
 	
-	public void setPolaPolzenia(int [] ppol)
-	{}
+
+	
+
 
 }
