@@ -1,31 +1,85 @@
+import java.util.ArrayList;
 
 public class ProstyPortalGra {
 	
-	public static void main(String[] args) {
+	private PomocnikGry pomocnik = new PomocnikGry();
+	private ArrayList<ProstyPortal> listaPortali = new ArrayList<ProstyPortal>();
+	private int iloscRuchow = 0;
+	
+	private void przygotujGre() {
 		
-		int iloscRuchow = 0;
-		PomocnikGry pomocnik = new PomocnikGry();
+		ProstyPortal pierwszy = new ProstyPortal();
+		pierwszy.setNazwa("onet.pl");
+		ProstyPortal drugi = new ProstyPortal();
+		drugi.setNazwa("wp.pl");
+		ProstyPortal trzeci = new ProstyPortal();
+		trzeci.setNazwa("Go2.com");
 		
-		ProstyPortal portal = new ProstyPortal();
+		listaPortali.add(pierwszy);
+		listaPortali.add(drugi);
+		listaPortali.add(trzeci);
 		
-		int liczbalosowa = (int) (Math.random() * 5);
+		System.out.println("Twoim celem jest zatopienie trzech portali.");
+		System.out.println("onet.pl, wp.pl, Go2.com");
+		System.out.println("Zatop je w jak najmniejszej ilosci ruchow");
 		
-		int[] polozenie = {liczbalosowa, liczbalosowa+1, liczbalosowa+2};
-		portal.setPolaPolzenia(polozenie);
-		boolean czyIstnieje  = true;
-		
-		while(czyIstnieje == true) {
-			String pole = pomocnik.pobierzDaneWejsciowe("Podaj liczbe");
+		for(ProstyPortal rozmieszczanyPortal : listaPortali) {
 			
-			String wynik = portal.sprawdz(pole);
+			ArrayList<String> nowePolozenie = PomocnikGry.rozmiescPortal(3);
+			rozmieszczanyPortal.setPolaPolzenia(nowePolozenie);
+		}
+	}
+	
+	private void rozpocznijGre() {
+		
+		while(!listaPortali.isEmpty()) {
 			
-			iloscRuchow++;
-			
+			String ruchGracza = pomocnik.pobierzDaneWejsciowe("Podaj pole: ");
+			sprawdzRuchGracza(ruchGracza);
+		}
+		zakonczGre();
+	}
+	
+	private void sprawdzRuchGracza(String ruch) {
+		
+		iloscRuchow++;
+		String wynik = "pudlo";
+		
+		for(ProstyPortal portalDoSprawdzenia : listaPortali) {
+			wynik = portalDoSprawdzenia.sprawdz(ruch);
+			if(wynik.equals("trafiony")) {
+				break;
+			}
 			if(wynik.equals("zatopiony")) {
-				czyIstnieje = false;
-				System.out.println(iloscRuchow + "ruchów");
+				listaPortali.remove(portalDoSprawdzenia);
+				break;
 			}
 		}
+		System.out.println(wynik);
+	}
+	
+	private void zakonczGre() {
+		
+		System.out.println("Wszystkie Portale zostaly zatopione! Teraz Twoje informacje nie maja znaczenia.");
+		
+		if(iloscRuchow <= 18) {
+			System.out.println("Wykonales jedynie " + iloscRuchow + " ruchow.");
+			System.out.println("Wydostales sie zanim Twoje informacje zatonely.");
+		}else {
+			System.out.println("Ale sie grzebales!. Wykonales az " + iloscRuchow + " ruchow.");
+			System.out.println("Teraz rybki plywaja pomiedzy Twoimi informacjami.");
+		}
+	}
+	
+	public static void main(String[] args) {
+		
+		ProstyPortalGra gra = new ProstyPortalGra();
+		gra.przygotujGre();
+		gra.rozpocznijGre();
+		
 	}
 
 }
+
+
+

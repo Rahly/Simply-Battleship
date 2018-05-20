@@ -1,34 +1,37 @@
+import java.util.ArrayList;
 
 public class ProstyPortal {
 	
-	int[] polaPolozenia;
-	int iloscTrafien = 0;
+	private ArrayList<String> polaPolozenia;
+	private String nazwa;
 	
-	public void setPolaPolzenia(int [] ppol)
+	
+	public void setPolaPolzenia(ArrayList<String> ppol)
 	{
 		polaPolozenia = ppol;
 	}
 	
-	public String sprawdz(String stringPole)
+	public void setNazwa(String nzwPortalu) {
+		nazwa = nzwPortalu;
+	}
+	
+	public String sprawdz(String ruch)
 	{
-		int strzal = Integer.parseInt(stringPole);
 		String wynik = "pud³o";
+		int indeks = polaPolozenia.indexOf(ruch);
 		
-		for(int pole:polaPolozenia) {
-			if (strzal == pole) {
+		if(indeks>=0) {
+			polaPolozenia.remove(indeks);
+			
+			if(polaPolozenia.isEmpty()) {
+				wynik = "zatopiony";
+				System.out.println("Auc! zatopiles portal " + nazwa + " :(");
+			}else {
 				wynik = "trafiony";
-				iloscTrafien++;
-				break;
 			}
 		}
 		
-		if(iloscTrafien == polaPolozenia.length) {
-			wynik = "zatopiony";
-		}
-		
-		System.out.println(wynik);
-		
-		return wynik;
+	return wynik;
 	}
 	
 
